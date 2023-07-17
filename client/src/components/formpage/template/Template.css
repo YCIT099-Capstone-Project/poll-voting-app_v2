@@ -1,0 +1,58 @@
+.template_section {
+  background-color: #f4f4f9;
+  padding-bottom: 40px;
+  padding-top: 7px;
+}
+
+.template_top {
+  margin-left: 180px;
+  margin-right: 180px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.template_right {
+  display: flex;
+}
+
+.galary_btn {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  font-size: 14px;
+}
+
+.template_body {
+  margin-left: 160px;
+  margin-right: 160px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.card {
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+.card_img {
+  box-sizing: border-box;
+  height: 120px;
+  width: 140px;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 0.2px solid #e0e0e0;
+}
+
+.card_img:hover {
+  border: 0.2px solid #000000;
+}
+
+.card_title {
+  font-size: 14px;
+  margin-top: 2px;
+  color: #202124;
+  font-weight: 500;
+}

@@ -1,0 +1,135 @@
+/* App.css */
+
+/* Reset default margins and paddings */
+body, h1, h2, h3, p, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set up the overall layout and positioning */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fcfcfc;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Set minimum height to fill the viewport */
+  position: relative; /* Add positioning context for the footer */
+}
+
+/* Header styles */
+header {
+  background-color: white;
+  color: #fcfcfc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 16.666%;
+  padding: 0 20px;
+}
+
+.logo img {
+  height: 40px;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: #5458EA;
+  text-decoration: none;
+}
+
+/* Content section styles */
+section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 160px 20px; /* Updated padding to increase vertical space */
+}
+
+section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #5457e9;
+}
+
+/* Footer styles */
+footer {
+  background-color: #9c9df1;
+  color: #fcfcfc;
+  padding: 20px; /* Adjust the padding to control the height */
+  position: absolute; /* Position the footer at the bottom */
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.contact, .social-media {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact h3, .social-media h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.social-media ul {
+  display: flex;
+  gap: 10px;
+}
+
+.social-media ul li {
+  list-style-type: none;
+}
+
+.social-media ul li a {
+  color: #fcfcfc;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  text-align: center;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  header {
+    padding: 0 10px;
+  }
+  
+  section h1 {
+    font-size: 2rem;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .contact, .social-media {
+    margin-bottom: 20px;
+  }
+}

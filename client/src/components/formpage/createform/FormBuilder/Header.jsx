@@ -44,6 +44,7 @@ const Header = ({
               label="Start Date"
               value={startDate}
               onChange={setStartDate}
+              disablePast={true}
               renderInput={(params) => (
                 <TextField {...params} fullWidth sx={{ mb: 2 }} />
               )}
@@ -54,6 +55,7 @@ const Header = ({
               label="End Date"
               value={endDate}
               onChange={setEndDate}
+              disablePast={true}
               renderInput={(params) => (
                 <TextField {...params} fullWidth sx={{ mb: 2 }} />
               )}

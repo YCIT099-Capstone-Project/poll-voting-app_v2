@@ -56,7 +56,7 @@ const MainFormBody = () => {
   };
 
   const handleCopyLink = (pollId) => {
-    const link = `http://localhost:5173/poll/${pollId}`;
+    const link = `${import.meta.env.VITE_API_FRONTEND}/${pollId}`;
     navigator.clipboard
       .writeText(link)
       .then(() => {

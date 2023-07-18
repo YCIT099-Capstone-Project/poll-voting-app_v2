@@ -17,7 +17,7 @@ const Login = () => {
     const data = { name: usernameOrEmail.toLowerCase(), password: password };
 
     axios
-      .post("http://localhost:4000/login", data)
+      .post(`${import.meta.env.VITE_API_BACKEND}/login`, data)
       .then((response) => {
         console.log(response.data);
         const { id } = response.data.data;

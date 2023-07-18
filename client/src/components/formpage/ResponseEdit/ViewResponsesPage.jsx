@@ -14,7 +14,7 @@ const ViewResponsesPage = () => {
     const fetchResponses = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/getResponses/${pollId}`
+          `${import.meta.env.VITE_API_BACKEND}/getResponses/${pollId}`
         );
         if (!response.ok) {
           throw new Error("HTTP status " + response.status);

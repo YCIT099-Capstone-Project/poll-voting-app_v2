@@ -9,16 +9,17 @@ const PollPage = () => {
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const pollResponse = await axios.get(
-          `http://localhost:4000/getPoll/${pollId}`
+          `${import.meta.env.VITE_API_BACKEND}/getPoll/${pollId}`
         );
         setPoll(pollResponse.data);
 
         const questionsResponse = await axios.get(
-          `http://localhost:4000/getQuestions/${pollId}`
+          `${import.meta.env.VITE_API_BACKEND}/getQuestions/${pollId}`
         );
         setQuestions(questionsResponse.data);
       } catch (error) {
@@ -56,9 +57,25 @@ const PollPage = () => {
       }
     });
   };
+  const allQuestionsAnswered = () => {
+    for (let question of questions) {
+      const response = responses.find(
+        (response) => response.questionId === question.id
+      );
+      if (!response || (response && !response.responseValue)) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!allQuestionsAnswered()) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
     let participantToken = localStorage.getItem("participantToken");
 
     if (!participantToken) {
@@ -69,23 +86,40 @@ const PollPage = () => {
     }
 
     try {
-      await axios.post(`http://localhost:4000/submitResponses/${pollId}`, {
-        participantToken,
-        responses,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_API_BACKEND}/submitResponses/${pollId}`,
+        {
+          participantToken,
+          responses,
+        }
+      );
       alert("Thank you for your submission!");
       setTimeout(() => {
         navigate("/");
       }, 1000);
     } catch (error) {
-      console.error(error);
+      if (error.response.status === 409) {
+        // Or whatever status code your server returns for this error
+        alert("You've already did this poll.");
+      } else {
+        console.error(error);
+      }
     }
   };
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const pollEnded = new Date(poll.end_date) < new Date();
 
   return (
     <div>
       <h1>{poll.title}</h1>
       <p>{poll.description}</p>
+      <p>Start Date: {formatDate(poll.start_date)}</p>
+      <p>End Date: {formatDate(poll.end_date)}</p>
+      {pollEnded ? <p>This poll has ended.</p> : null}
       <form onSubmit={handleSubmit}>
         {questions.map((question) => (
           <div key={question.id}>
@@ -104,8 +138,7 @@ const PollPage = () => {
               />
             )}
             {question.question_type === "textarea" && (
-              <input
-                type="text"
+              <textarea
                 value={
                   responses.find(
                     (response) => response.questionId === question.id
@@ -137,7 +170,15 @@ const PollPage = () => {
               ))}
           </div>
         ))}
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          disabled={!allQuestionsAnswered() || pollEnded}
+          style={{
+            backgroundColor: allQuestionsAnswered() && !pollEnded ? "" : "gray",
+          }}
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

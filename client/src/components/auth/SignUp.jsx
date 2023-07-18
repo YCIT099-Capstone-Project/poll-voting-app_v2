@@ -19,6 +19,16 @@ const SignUp = () => {
   const navigate = useNavigate(); // Use the useNavigate hook
 
   const handleSignUp = () => {
+    if (!username || !password || !email) {
+      setErrorMessage("All fields are required");
+      return;
+    }
+
+    if (/\s/.test(username)) {
+      setErrorMessage("Username cannot contain spaces");
+      return;
+    }
+
     if (!validateEmail(email)) {
       setErrorMessage("Invalid email address");
       return;
@@ -32,7 +42,7 @@ const SignUp = () => {
     const data = { name: username, password: password, email: email };
 
     axios
-      .post("http://localhost:4000/signup", data)
+      .post(`${import.meta.env.VITE_API_BACKEND}/signup`, data)
       .then((response) => {
         console.log(response.data);
         alert("Sign up successful");

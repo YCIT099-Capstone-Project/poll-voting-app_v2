@@ -364,7 +364,11 @@ app.post("/submitResponses/:pollId", async (req, res) => {
     res.json({ message: "Responses submitted successfully" });
   } catch (error) {
     await client.query("ROLLBACK");
-    res.status(500).json({ error: error.message });
+    if (error.message === "Participant has already responded to this poll") {
+      res.status(409).json({ error: error.message }); // Use 409 Conflict status code for this error
+    } else {
+      res.status(500).json({ error: error.message });
+    }
   } finally {
     client.release();
   }

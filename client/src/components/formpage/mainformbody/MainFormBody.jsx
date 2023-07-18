@@ -29,7 +29,7 @@ const MainFormBody = () => {
 
   useEffect(() => {
     if (user && user.id) {
-      fetch(`http://localhost:4000/getPolls/${user.id}`)
+      fetch(`${import.meta.env.VITE_API_BACKEND}/getPolls/${user.id}`)
         .then((response) => response.json())
         .then((data) => setPolls(data))
         .catch((err) => console.log(err));
@@ -37,7 +37,7 @@ const MainFormBody = () => {
   }, [user]);
 
   const deletePoll = (pollId) => {
-    fetch(`http://localhost:4000/deletePoll/${pollId}`, {
+    fetch(`${import.meta.env.VITE_API_BACKEND}/deletePoll/${pollId}`, {
       method: "DELETE",
     })
       .then((response) => response.json())

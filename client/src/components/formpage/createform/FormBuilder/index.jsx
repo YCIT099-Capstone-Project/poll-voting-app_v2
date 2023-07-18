@@ -41,6 +41,11 @@ const FormBuilder = () => {
     event.preventDefault();
     try {
       const userId = user.id;
+      // Check if the end date is earlier than the start date
+      if (endDate < startDate) {
+        alert("End date cannot be before the start date");
+        return;
+      }
       const payload = {
         start_date: startDate,
         end_date: endDate,
@@ -50,7 +55,7 @@ const FormBuilder = () => {
         questions: data,
       };
       const response = await axios.post(
-        "http://localhost:4000/createsurvey",
+        `${import.meta.env.VITE_API_BACKEND}/createsurvey`,
         payload
       );
       navigate("/forms");

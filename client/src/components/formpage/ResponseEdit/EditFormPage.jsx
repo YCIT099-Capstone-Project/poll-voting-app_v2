@@ -34,7 +34,7 @@ const EditFormPage = () => {
     const fetchFormData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/getPoll/${formId}`
+          `${import.meta.env.VITE_API_BACKEND}/getPoll/${formId}`
         );
 
         // Log response data to see its structure
@@ -46,7 +46,7 @@ const EditFormPage = () => {
         // Set other state variables if you have them
 
         const questionsResponse = await axios.get(
-          `http://localhost:4000/getQuestions/${formId}`
+          `${import.meta.env.VITE_API_BACKEND}/getQuestions/${formId}`
         );
         setData(questionsResponse.data);
       } catch (error) {
@@ -63,7 +63,7 @@ const EditFormPage = () => {
       const userId = user.id;
 
       const response = await axios.put(
-        `http://localhost:4000/updatePoll/${formId}`,
+        `${import.meta.env.VITE_API_BACKEND}/updatePoll/${formId}`,
         {
           start_date: startDate,
           end_date: endDate,
@@ -74,10 +74,13 @@ const EditFormPage = () => {
       );
       await Promise.all(
         data.map((question) =>
-          axios.put(`http://localhost:4000/updateQuestion/${question.id}`, {
-            question_text: question.value,
-            answers: question.options,
-          })
+          axios.put(
+            `${import.meta.env.VITE_API_BACKEND}/updateQuestion/${question.id}`,
+            {
+              question_text: question.value,
+              answers: question.options,
+            }
+          )
         )
       );
 

@@ -56,7 +56,7 @@ const MainFormBody = () => {
   };
 
   const handleCopyLink = (pollId) => {
-    const link = `${import.meta.env.VITE_API_FRONTEND}/${pollId}`;
+    const link = `${import.meta.env.VITE_API_FRONTEND}/poll/${pollId}`;
     navigator.clipboard
       .writeText(link)
       .then(() => {

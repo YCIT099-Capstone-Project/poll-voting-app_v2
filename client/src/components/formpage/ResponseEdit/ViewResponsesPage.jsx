@@ -20,7 +20,6 @@ const ViewResponsesPage = () => {
           throw new Error("HTTP status " + response.status);
         }
         const data = await response.json();
-        // Sort the responses by the created_at timestamp
         const sortedResponses = data.sort(
           (a, b) => new Date(a.created_at) - new Date(b.created_at)
         );
@@ -50,8 +49,8 @@ const ViewResponsesPage = () => {
 
   const exportToPDF = () => {
     const unit = "pt";
-    const size = "A4"; // Use A4 page size
-    const orientation = "portrait"; // Portrait or landscape
+    const size = "A4";
+    const orientation = "portrait";
 
     const marginLeft = 40;
     const doc = new jsPDF(orientation, unit, size);

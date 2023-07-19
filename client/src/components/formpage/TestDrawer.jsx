@@ -36,6 +36,13 @@ const TestDrawer = () => {
         <ListItem>
           <Link to={"./"}>HOME</Link>
         </ListItem>
+
+        <Divider />
+        <ListItem>
+          <a href="../polls/token" target="_blank">
+            Survey Token Page
+          </a>
+        </ListItem>
         <Divider />
       </List>
     </div>

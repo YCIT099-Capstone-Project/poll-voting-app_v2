@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import PollPage from "./components/PollPage";
+import PollToken from "./components/polltoken/PollToken";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forms/*" element={<FormPage />} />
           <Route path="/poll/:pollId" element={<PollPage />} />
+          <Route path="/polls/token" element={<PollToken />} />
         </Routes>
       </Router>
     </Fragment>

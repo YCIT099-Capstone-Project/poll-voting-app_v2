@@ -326,7 +326,7 @@ const EditFormPage = () => {
             padding: "10px 60px",
             borderRadius: "5px",
             cursor: "pointer",
-            transition: "opacity 0.36s ease", // Add transition property for opacity
+            transition: "opacity 0.36s ease",
             "&:hover": {
               backgroundColor: "#BA68C8",
             },

@@ -70,7 +70,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/createsurvey", (req, res) => {
-  const { title, description, userId, questions, start_date, end_date } =
+  const { title, description, userId, questions, start_date, end_date, token } =
     req.body;
   const sqlPoll =
     "INSERT INTO Polls (title, description, user_id, start_date, end_date) VALUES ($1, $2, $3 ,$4 ,$5) RETURNING *";
@@ -78,35 +78,43 @@ app.post("/createsurvey", (req, res) => {
 
   pool.query(sqlPoll, valuesPoll).then((data) => {
     const pollId = data.rows[0].id;
-    Promise.all(
-      questions.map((question) => {
-        const sqlQuestion =
-          "INSERT INTO Questions (question_text, question_type, poll_id) VALUES ($1, $2, $3) RETURNING *";
-        // use question.value and question.type instead of question.text and question.type
-        const valuesQuestion = [question.value, question.type, pollId];
-        return pool.query(sqlQuestion, valuesQuestion);
-      })
-    )
-      .then((questionsData) => {
+    // Insert the token linked with the pollId
+    const sqlToken = "INSERT INTO poll_token (poll_id, token) VALUES ($1, $2)";
+    const valuesToken = [pollId, token];
+
+    pool
+      .query(sqlToken, valuesToken)
+      .then(() => {
         Promise.all(
-          questionsData.map((questionData, i) => {
-            const questionId = questionData.rows[0].id;
-            if (questions[i].type === "radio") {
-              // return the Promise from the map function
-              return Promise.all(
-                questions[i].options.map((option) => {
-                  const sqlAnswer =
-                    "INSERT INTO Answers (answer_text, question_id) VALUES ($1, $2)";
-                  // use option.value instead of option
-                  const valuesAnswer = [option.value, questionId];
-                  return pool.query(sqlAnswer, valuesAnswer);
-                })
-              ).catch((err) => res.status(500).json({ error: err.message }));
-            }
+          questions.map((question) => {
+            const sqlQuestion =
+              "INSERT INTO Questions (question_text, question_type, poll_id) VALUES ($1, $2, $3) RETURNING *";
+            const valuesQuestion = [question.value, question.type, pollId];
+            return pool.query(sqlQuestion, valuesQuestion);
           })
         )
-          .then(() => {
-            res.status(200).json({ message: "Survey saved successfully." });
+          .then((questionsData) => {
+            Promise.all(
+              questionsData.map((questionData, i) => {
+                const questionId = questionData.rows[0].id;
+                if (questions[i].type === "radio") {
+                  return Promise.all(
+                    questions[i].options.map((option) => {
+                      const sqlAnswer =
+                        "INSERT INTO Answers (answer_text, question_id) VALUES ($1, $2)";
+                      const valuesAnswer = [option.value, questionId];
+                      return pool.query(sqlAnswer, valuesAnswer);
+                    })
+                  ).catch((err) =>
+                    res.status(500).json({ error: err.message })
+                  );
+                }
+              })
+            )
+              .then(() => {
+                res.status(200).json({ message: "Survey saved successfully." });
+              })
+              .catch((err) => res.status(500).json({ error: err.message }));
           })
           .catch((err) => res.status(500).json({ error: err.message }));
       })
@@ -282,7 +290,7 @@ app.get("/getQuestions/:formId", (req, res) => {
 
 app.put("/updateQuestion/:questionId", async (req, res) => {
   const { questionId } = req.params;
-  const { question_text } = req.body; // assumes the question text is sent in the request body
+  const { question_text } = req.body;
 
   try {
     const sql =
@@ -429,6 +437,45 @@ app.get("/getResponses/:pollId", async (req, res) => {
     res.json(responses.rows);
   } catch (err) {
     console.error(err.message);
+  }
+});
+
+app.get("/polltoken/:token", async (req, res) => {
+  const { token } = req.params;
+
+  try {
+    const result = await pool.query(
+      "SELECT poll_id FROM poll_token WHERE token = $1",
+      [token]
+    );
+
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ message: "Token not found" });
+    }
+  } catch (error) {
+    console.error("Error getting token:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+app.get("/tokenfromid/:pollId", async (req, res) => {
+  const { pollId } = req.params;
+
+  try {
+    const result = await pool.query(
+      "SELECT token FROM poll_token WHERE poll_id = $1",
+      [pollId]
+    );
+
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ message: "Token not found" });
+    }
+  } catch (error) {
+    console.error("Error getting token:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

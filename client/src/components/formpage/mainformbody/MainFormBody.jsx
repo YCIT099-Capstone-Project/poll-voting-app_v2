@@ -65,6 +65,22 @@ const MainFormBody = () => {
       })
       .catch((err) => console.error(err));
   };
+  const handleCopyToken = (pollId) => {
+    fetch(`${import.meta.env.VITE_API_BACKEND}/tokenfromid/${pollId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.token) {
+          navigator.clipboard
+            .writeText(data.token)
+            .then(() => {
+              setCopySuccess(true);
+              setTimeout(() => setCopySuccess(false), 2000);
+            })
+            .catch((err) => console.error(err));
+        }
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div className="main_body">
@@ -147,6 +163,18 @@ const MainFormBody = () => {
                       onClick={() => handleCopyLink(poll.id)}
                     >
                       {copySuccess ? "Link Copied!" : "Copy Link"}
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <div
+                      className={
+                        copySuccess
+                          ? "copy-token-btn success"
+                          : "copy-token-btn"
+                      }
+                      onClick={() => handleCopyToken(poll.id)}
+                    >
+                      {copySuccess ? "Token Copied!" : "Copy Token"}
                     </div>
                   </MenuItem>
                 </Menu>

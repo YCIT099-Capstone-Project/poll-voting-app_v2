@@ -46,6 +46,7 @@ const FormBuilder = () => {
         alert("End date cannot be before the start date");
         return;
       }
+      const token = uuid();
       const payload = {
         start_date: startDate,
         end_date: endDate,
@@ -53,6 +54,7 @@ const FormBuilder = () => {
         description,
         userId,
         questions: data,
+        token,
       };
       const response = await axios.post(
         `${import.meta.env.VITE_API_BACKEND}/createsurvey`,

@@ -87,15 +87,7 @@ const MainFormBody = () => {
       <div className="mainbody_top">
         <div className="mainbody_top_left">Recent Forms</div>
         <div className="mainbody_top_right">
-          <div className="mainbody_top_center">
-            Owned by Anyone <ArrowDropDown />
-          </div>
-          <IconButton>
-            <Storage />
-          </IconButton>
-          <IconButton>
-            <FolderOpen />
-          </IconButton>
+          <div className="mainbody_top_center"></div>
         </div>
       </div>
       <div className="mainbody_docs">

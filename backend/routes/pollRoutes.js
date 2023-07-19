@@ -4,6 +4,7 @@ const pollController = require("../controllers/pollController");
 
 router.post("/createsurvey", pollController.createsurvey);
 router.get("/getPolls/:userId", pollController.getPollsByUerId);
+router.get("/notificationPoll/:userId", pollController.getPollsByUerIdForNoti);
 router.delete("/deletePoll/:pollId", pollController.deletePoll);
 router.get("/getPoll/:pollId", pollController.getPollById);
 router.put("/updatePoll/:formId", pollController.updatePollByFormId);

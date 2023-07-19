@@ -7,6 +7,8 @@ const pollRoutes = require("./routes/pollRoutes");
 const questionRoutes = require("./routes/questionRoutes");
 const answersRoute = require("./routes/answersRoute");
 const responseRoute = require("./routes/responseRoute");
+
+//TODO: add the api key to routes that need it
 const API_SECRET_KEY = process.env.API_SECRET_KEY;
 
 const app = express();

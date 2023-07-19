@@ -1,22 +1,37 @@
-import React from "react";
-import { IconButton } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { FormsLogo } from "../../../assets/img";
 import SearchIcon from "@mui/icons-material/Search";
-import AppsIcon from "@mui/icons-material/Apps";
-import { Avatar } from "@mui/material";
 import "./FormHeader.css";
 import logo from "../../images/Pollite.jpeg";
 import TestDrawer from "../TestDrawer";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../../redux/features/userSlice";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 const FormHeader = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_BACKEND}/notificationPoll/${user.id}`) // replace with actual API URL
+      .then((response) => response.json())
+      .then((data) => setNotifications(data));
+  }, [user.id]);
+
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+  };
+
+  const handleNotificationClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleNotificationClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -51,9 +66,23 @@ const FormHeader = () => {
         <input type="text" name="search" placeholder="search" />
       </div>
       <div className="header_right">
-        <IconButton>
-          <AppsIcon />
+        <IconButton onClick={handleNotificationClick}>
+          <NotificationsActiveIcon />
         </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleNotificationClose}
+        >
+          {notifications.map((notification, index) => (
+            <MenuItem key={index} onClick={handleNotificationClose}>
+              {notification.title} is ending within a day
+            </MenuItem>
+          ))}
+        </Menu>
+
         <IconButton>
           <p>{user.name}</p>
         </IconButton>

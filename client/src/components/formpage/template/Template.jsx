@@ -31,13 +31,7 @@ const Template = () => {
           </span>
         </div>
         <div className="template_right">
-          <div className="galary_btn">
-            Template Gallery
-            <UnfoldMoreIcon />
-          </div>
-          <IconButton>
-            <MoreVertIcon fontSize="small" />
-          </IconButton>
+          <div className="galary_btn"></div>
         </div>
       </div>
       <div className="template_body">

@@ -67,6 +67,27 @@ exports.getPollsByUerId = (req, res) => {
       res.status(500).json({ error: "Server error" });
     });
 };
+exports.getPollsByUerIdForNoti = (req, res) => {
+  const { userId } = req.params;
+  const sql = `
+  SELECT * 
+  FROM Polls 
+  WHERE user_id = $1 
+  AND DATE(end_date) = DATE(NOW() + INTERVAL '1 day')
+  ORDER BY created_at DESC
+`;
+
+  const values = [userId];
+
+  pool
+    .query(sql, values)
+    .then((data) => {
+      res.json(data.rows);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: "Server error" });
+    });
+};
 
 exports.deletePoll = (req, res) => {
   const { pollId } = req.params;

@@ -86,6 +86,15 @@ const createTables = async () => {
     CREATE INDEX IF NOT EXISTS idx_responses_participant_id ON Responses (participant_id);
     CREATE INDEX IF NOT EXISTS idx_responses_question_id ON Responses (question_id);
     CREATE INDEX IF NOT EXISTS idx_responses_answer_id ON Responses (answer_id);
+    
+
+    ALTER TABLE poll_token
+    DROP CONSTRAINT IF EXISTS poll_token_poll_id_fkey;
+
+    ALTER TABLE poll_token
+    ADD CONSTRAINT poll_token_poll_id_fkey FOREIGN KEY (poll_id)
+    REFERENCES Polls (id) ON DELETE CASCADE;
+
         
     `);
     console.log("Tables created successfully.");

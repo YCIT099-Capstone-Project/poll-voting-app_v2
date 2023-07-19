@@ -6,6 +6,11 @@
 - Node.js
 - PostgreSQL
 
+## Technologies Used
+
+- Backend: bcryptjs, cors, dotenv, express, pg
+- Frontend:date-fns, Material UI, Font Awesome, axios,reduxjs, redux tool kit, file-saver,jspdf, xlsx,react-router-dom,redux-persist,styled-components
+
 ## Backend Setup
 
 1. Clone the git repository `git clone https://github.com/YCIT099-Capstone-Project/poll-voting-app_v2.git`

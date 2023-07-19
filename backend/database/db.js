@@ -92,7 +92,7 @@ const createTables = async () => {
     DROP CONSTRAINT IF EXISTS poll_token_poll_id_fkey;
 
     ALTER TABLE poll_token
-    ADD CONSTRAINT IF EXISTS poll_token_poll_id_fkey FOREIGN KEY (poll_id)
+    ADD CONSTRAINT  poll_token_poll_id_fkey FOREIGN KEY (poll_id)
     REFERENCES Polls (id) ON DELETE CASCADE;
 
         

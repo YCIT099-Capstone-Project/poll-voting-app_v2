@@ -35,6 +35,9 @@ const Header = () => {
           ) : (
             <>
               <li>
+                <Link to="/polls/token">Participate in a survey</Link>
+              </li>
+              <li>
                 <Link to="/login">Login</Link>
               </li>
               <li>

@@ -59,12 +59,7 @@ const FormHeader = () => {
           />
         </div>
       </div>
-      <div className="header_search">
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <input type="text" name="search" placeholder="search" />
-      </div>
+
       <div className="header_right">
         <IconButton onClick={handleNotificationClick}>
           <NotificationsActiveIcon />

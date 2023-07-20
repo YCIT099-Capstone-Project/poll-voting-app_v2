@@ -69,13 +69,14 @@ const FormBuilder = () => {
 
   //Function to add new element
   const addElement = () => {
-    const data = {
+    const newData = {
       id: uuid(),
       value: "",
       type: formData,
       required: false,
     };
-    setData((prevState) => [...prevState, data]);
+    // Extract the 'data' array from the object and use it to set the state
+    setData((prevState) => (prevState ? [...prevState, newData] : [newData]));
     setFormData(initVal);
   };
 
@@ -104,7 +105,7 @@ const FormBuilder = () => {
 
   //Function to handle sorting of elements
   const handleOnChangeSort = ({ items }) => {
-    setData(items);
+    setData(items.map((item) => item.item));
   };
 
   //Function to Handle Input Values
@@ -260,56 +261,65 @@ const FormBuilder = () => {
 
   return (
     <Fragment>
-      <Grid container spacing={1} direction="row" justifyContent="center">
-        <Grid item md={6}>
-          <Header
-            title={title}
-            setTitle={setTitle}
-            description={description}
-            setDescription={setDescription}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-          />
-          <Nestable
-            items={items}
-            renderItem={renderElements}
-            maxDepth={1}
-            onChange={handleOnChangeSort}
-          />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Grid container spacing={1} direction="row" justifyContent="center">
+          <Grid item md={6}>
+            <Header
+              title={title}
+              setTitle={setTitle}
+              description={description}
+              setDescription={setDescription}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+            />
+            <Nestable
+              items={items}
+              renderItem={renderElements}
+              maxDepth={1}
+              onChange={handleOnChangeSort}
+            />
+          </Grid>
+          <Grid item md={1}>
+            <Tooltip title="Add Element" aria-label="add-element">
+              <IconButton
+                aria-label="add-element"
+                onClick={addElement}
+                sx={{ position: "sticky", top: 30 }}
+              >
+                <AddCircleOutlineIcon color="secondary" />
+              </IconButton>
+            </Tooltip>
+          </Grid>
         </Grid>
-        <Grid item md={1}>
-          <Tooltip title="Add Element" aria-label="add-element">
-            <IconButton
-              aria-label="add-element"
-              onClick={addElement}
-              sx={{ position: "sticky", top: 30 }}
-            >
-              <AddCircleOutlineIcon color="secondary" />
-            </IconButton>
-          </Tooltip>
-        </Grid>
-      </Grid>
-      <Box sx={{ width: "fit-content", margin: "0 auto" }}>
-        <Button
-          type="submit"
-          sx={{
-            backgroundColor: "#9C27B0",
-            color: "white",
-            fontSize: "20px",
-            padding: "10px 60px",
-            borderRadius: "5px",
-            cursor: "pointer",
-            transition: "opacity 0.36s ease", // Add transition property for opacity
-            "&:hover": {
-              backgroundColor: "#BA68C8",
-            },
-          }}
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
+        <Box sx={{ width: "fit-content", margin: "0 auto", marginTop: "20px" }}>
+          <Button
+            type="submit"
+            sx={{
+              backgroundColor: "#5457e9",
+              color: "#fcfcfc",
+              fontSize: "20px",
+              padding: "10px 60px",
+              borderRadius: "5px",
+              cursor: "pointer",
+              transition: "opacity 0.36s ease",
+              "&:hover": {
+                backgroundColor: "#6c6eeb",
+              },
+            }}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Box>
       </Box>
     </Fragment>
   );

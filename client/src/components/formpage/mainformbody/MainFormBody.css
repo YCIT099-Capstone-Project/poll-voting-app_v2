@@ -70,3 +70,22 @@
   flex-direction: row;
   align-items: center;
 }
+.search {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.search input {
+  height: 28px;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  width: 180px;
+  margin-right: 8px;
+}
+
+.search input:hover {
+  background-color: whitesmoke;
+}

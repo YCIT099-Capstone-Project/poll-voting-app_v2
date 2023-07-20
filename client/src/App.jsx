@@ -7,6 +7,7 @@ import SignUp from "./components/auth/SignUp";
 import Login from "./components/auth/Login";
 import PollPage from "./components/PollPage";
 import PollToken from "./components/polltoken/PollToken";
+import Thank from "./thanktheteam/Thank";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/spicialthank" element={<Thank />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forms/*" element={<FormPage />} />

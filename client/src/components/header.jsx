@@ -27,13 +27,19 @@ const Header = () => {
       <nav>
         <ul>
           {user ? (
-            <li>
-              <Link type="button" onClick={handleLogout}>
-                Logout
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link to="/spicialthank">Team</Link>
+              </li>
+              <li>
+                <Link type="button" onClick={handleLogout}>
+                  Logout
+                </Link>
+              </li>
+            </>
           ) : (
             <>
+              <Link to="/spicialthank">Team</Link>
               <li>
                 <Link to="/polls/token">Participate in a survey</Link>
               </li>

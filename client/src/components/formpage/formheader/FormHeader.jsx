@@ -9,12 +9,15 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../../redux/features/userSlice";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import { useNavigate } from "react-router-dom";
 
 const FormHeader = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BACKEND}/notificationPoll/${user.id}`) // replace with actual API URL
       .then((response) => response.json())
@@ -24,6 +27,7 @@ const FormHeader = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    navigate("/");
   };
 
   const handleNotificationClick = (event) => {

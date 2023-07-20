@@ -16,7 +16,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate();
 
   const handleSignUp = () => {
     if (!username || !password || !email) {
@@ -48,7 +48,7 @@ const SignUp = () => {
         alert("Sign up successful");
         localStorage.setItem("token", response.data.token);
 
-        navigate("/"); // Navigate to the home page
+        navigate("/");
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {

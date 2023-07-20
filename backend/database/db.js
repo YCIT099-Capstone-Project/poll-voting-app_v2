@@ -58,7 +58,7 @@ const createTables = async () => {
     );
     
     CREATE TABLE IF NOT EXISTS Participants_Polls (
-      participant_id INTEGER REFERENCES Participants(id),
+      participant_id INTEGER REFERENCES Participants(id) ON DELETE CASCADE,
       poll_id INTEGER REFERENCES Polls(id),
       PRIMARY KEY (participant_id, poll_id)
     );

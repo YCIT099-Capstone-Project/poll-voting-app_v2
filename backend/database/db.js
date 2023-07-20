@@ -44,7 +44,7 @@ const createTables = async () => {
     
     CREATE TABLE IF NOT EXISTS Answers (
       id SERIAL PRIMARY KEY,
-      question_id INTEGER REFERENCES Questions(id),
+      question_id INTEGER REFERENCES Questions(id) ON DELETE CASCADE,
       answer_text TEXT,
       created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMPTZ

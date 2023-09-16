@@ -27,3 +27,5 @@
 3. Update the `.env` file with your keys.
 4. Run `npm install` to install dependencies (this may take some time).
 5. Run `npm run dev` to start the development server.
+
+** Live link is not working anymore
